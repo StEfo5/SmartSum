@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -38,6 +39,23 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function rli_update(Request $request)
+    {
+        DB::table('users')
+            ->where('id', Auth::user()->id)
+            ->update([
+                'type' => $request->type,
+            ]);
+        if($request->role!=Null){
+            DB::table('users')
+            ->where('id', Auth::user()->id)
+            ->update([
+                'role' => $request->role,
+            ]);
+        }
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
