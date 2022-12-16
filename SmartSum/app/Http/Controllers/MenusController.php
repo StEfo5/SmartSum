@@ -14,6 +14,7 @@ use DateTimeInterface;
 class MenusController extends Controller
 {
     public function show(){
+        date_default_timezone_set('Asia/Yakutsk');
         $present_date = date('Y-m-d');
         $menus = DB::table('menus')
             ->where('date', '>=', $present_date)
@@ -62,6 +63,10 @@ class MenusController extends Controller
 
     public function add(Request $request)
     {
+        $request->validate([
+            'date' => ['required', 'unique:menus'],
+        ]);
+
         $menu = new Menu();
         $menu->dormitory_breakfast   = $request->dormitory_breakfast;
         $menu->dormitory_dinner      = $request->dormitory_dinner;

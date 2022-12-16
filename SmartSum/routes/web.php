@@ -3,8 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenusController;
+use App\Http\Controllers\SummariesController;
+use App\Http\Controllers\DashboardController;
 
 
 /*
@@ -23,11 +24,13 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    date_default_timezone_set('Asia/Yakutsk');
+    $date = date('Y-m-d');
     if(Auth::user()->type < 3){
         return redirect('/menus');
     }
     else{
-        return redirect('/summaries');
+        return redirect()->route('summaries.show', ['date' => $date]);
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -40,6 +43,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'show')->name('menus.show');
             Route::post('/add', 'add')->name('menus.add');
             Route::post('/registration', 'registration')->name('menus.registration');
+        });
+    });
+    Route::prefix('/summary')->group(function () {
+        Route::controller(SummariesController::class)->group(function () {
+            Route::get('/{date}', 'show')->name('summaries.show');
+            Route::post('/confirm', 'confirm')->name('summary.confirm');
         });
     });
 });

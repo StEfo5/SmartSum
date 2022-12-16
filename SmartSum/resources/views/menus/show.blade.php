@@ -172,7 +172,6 @@
                     </div>
                 </div>
             @endfor
-            
         </div>
     </div>
 </x-app-layout>
