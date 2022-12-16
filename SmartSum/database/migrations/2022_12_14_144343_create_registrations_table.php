@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('type');
             $table->date('date');
-            $table->boolean('is_confirmed');
-            $table->boolean('is_registration');
+            $table->boolean('is_confirmed')->default(false);
+            $table->boolean('is_registration')->default(false);
         });
     }
 

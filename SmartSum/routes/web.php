@@ -23,10 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    if (Auth::user()->type == 0){
-        return redirect('/profile');
-    }
-    else if(Auth::user()->type < 3){
+    if(Auth::user()->type < 3){
         return redirect('/menus');
     }
     else{
@@ -37,12 +34,12 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile', [ProfileController::class, 'rli_update'])->name('profile.rli_update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::prefix('/menus')->group(function () {
         Route::controller(MenusController::class)->group(function () {
-            Route::get('/', 'show')->name('menus');
-            
+            Route::get('/', 'show')->name('menus.show');
+            Route::post('/add', 'add')->name('menus.add');
+            Route::post('/registration', 'registration')->name('menus.registration');
         });
     });
 });

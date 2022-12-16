@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -20,7 +21,11 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        $classes = DB::table('education_classes')
+            ->get();
+        return view('auth.register', [
+            'classes' => $classes,
+        ]);
     }
 
     /**
@@ -37,12 +42,18 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'telegram_id' => ['required'],
+            'type' => ['required'],
+            'class_id' => ['required'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'telegram_id' => $request->telegram_id,
+            'type' => $request->type,
+            'class_id' => $request->class_id,
         ]);
 
         event(new Registered($user));

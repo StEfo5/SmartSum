@@ -16,15 +16,15 @@ return new class extends Migration
         Schema::create('summaries', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('dormitory');
-            $table->integer('city');
-            $table->integer('breakfast');
-            $table->integer('dinner');
-            $table->integer('entree');
-            $table->integer('second_course');
+            $table->integer('dormitory')->default(0);
+            $table->integer('city')->default(0);
+            $table->integer('breakfast')->default(0);
+            $table->integer('dinner')->default(0);
+            $table->integer('entree')->default(0);
+            $table->integer('second_course')->default(0);
             $table->date('date');
             $table->integer('class_id');
-            $table->boolean('is_confirmed');
+            $table->boolean('is_confirmed')->default(false);
         });
     }
 

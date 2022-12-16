@@ -18,8 +18,11 @@ class ProfileController extends Controller
      */
     public function edit(Request $request)
     {
+        $classes = DB::table('education_classes')
+            ->get();
         return view('profile.edit', [
             'user' => $request->user(),
+            'classes' => $classes,
         ]);
     }
 
@@ -41,24 +44,6 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
-
-    public function rli_update(Request $request)
-    {
-        DB::table('users')
-            ->where('id', Auth::user()->id)
-            ->update([
-                'type' => $request->type,
-            ]);
-        if($request->role!=Null){
-            DB::table('users')
-            ->where('id', Auth::user()->id)
-            ->update([
-                'role' => $request->role,
-            ]);
-        }
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
     /**
      * Delete the user's account.
      *

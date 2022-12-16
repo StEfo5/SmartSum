@@ -23,6 +23,37 @@
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
+            <!-- Telegram ID -->
+            <div class="mt-4">
+                <x-input-label for="telegram_id" :value="__('Telegram ID (получите от бота @getmyid_bot)')" />
+                <x-text-input id="telegram_id" class="block mt-1 w-full" type="text" name="telegram_id" :value="old('telegram_id')" required />
+                <x-input-error :messages="$errors->get('telegram_id')" class="mt-2" />
+            </div>
+            
+            <!-- Status -->
+            <div class="mt-4">
+                <x-input-label for="type" :value="__('Статус')" />
+                <select id="type" name="type" type="text" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"  required autofocus>
+                    <option class="" disabled selected>Выберите статус</option>
+                    <option value="1" >Ученик из интерната</option>
+                    <option value="2" >Ученик из города</option>
+                    <option value="3" >Сотрудник РЛИ</option>
+                </select>
+                <x-input-error :messages="$errors->get('type')" class="mt-2" />
+            </div>
+
+            <!-- Class -->
+            <div class="mt-4">
+                <x-input-label for="class_id" :value="__('Класс (если вы сотрудник РЛИ, выберите любой)')" />
+                <select name="class_id" id="class_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
+                    <option disabled selected>Выберите класс</option>
+                    @foreach ($classes as $item)
+                        <option value="{{$item->id}}">{{$item->name}}</option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('class_id')" class="mt-2" />
+            </div>
+
             <!-- Password -->
             <div class="mt-4">
                 <x-input-label for="password" :value="__('Пароль')" />

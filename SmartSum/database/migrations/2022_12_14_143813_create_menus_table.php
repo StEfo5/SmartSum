@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('afternoon_snack');
             $table->string('supper');
             $table->string('city_breakfast');
-            $table->string('city_dinner');
+            $table->string('entree');
+            $table->string('second_course');
             $table->date('date');
         });
     }

@@ -47,6 +47,57 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="telegram_id" :value="__('Telegram ID')" />
+            <x-text-input id="telegram_id" name="telegram_id" type="text" class="mt-1 block w-full" :value="old('telegram_id', $user->telegram_id)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('telegram_id')" />
+        </div>
+
+        <div>
+            <x-input-label for="type" :value="__('Статус')" />
+            <select id="type" name="type" type="text" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"  required autofocus>
+                <option class="" disabled @if ($user->type == 0)
+                    selected
+                @endif>Выберите должность</option>
+                <option value="1" @if ($user->type == 1)
+                    selected
+                @endif>Ученик из интерната</option>
+                <option value="2" @if ($user->type == 2)
+                    selected
+                @endif>Ученик из города</option>
+                <option value="3" @if ($user->type == 3)
+                    selected
+                @endif>Сотрудник РЛИ</option>
+            </select>
+        </div>
+
+        <div>
+            <x-input-label for="class_id" :value="__('Класс')" />
+            <select name="class_id" id="class_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
+                <option disabled selected>Выберите класс</option>
+                @foreach ($classes as $item)
+                    <option @if ($user->class_id == $item->id)
+                        selected
+                    @endif value="{{$item->id}}">{{$item->name}}</option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('class_id')" />
+        </div>
+        
+        <div>
+            <x-input-label for="role" :value="__('Должность')" />
+            <select name="role" id="role" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
+                <option value="0" @if ($user->role==0)
+                    selected
+                @endif> - </option>
+                <option value="1" @if ($user->role==1)
+                    selected
+                @endif> Ответственный за сводку</option>
+            </select>
+        </div>
+
+        
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Сохранить') }}</x-primary-button>
 
