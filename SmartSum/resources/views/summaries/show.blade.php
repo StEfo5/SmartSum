@@ -151,7 +151,9 @@
 
                     <div class="mt-6 space-y-6">
                             @foreach ($dormitory_students as $student)
-                            <div>
+                            
+                            <form action="{{route('notification.user')}}" method="post">
+                                @csrf
                                 <x-input-label>@if ($student->is_confirmed)
                                     +
                                 @else
@@ -161,10 +163,13 @@
                                 @else
                                     -
                                 @endif</x-input-label>
+
+                                <input type="text" class="hidden" name="user_id" value="{{$student->id}}">
+
                                 <div class="flex items-center gap-4">
                                     <x-primary-button>{{ __('Оповестить') }}</x-primary-button>
                         
-                                    @if (session('status') === 'summary-updated')
+                                    @if (session('status') === 'notification_sent')
                                         <p
                                             x-data="{ show: true }"
                                             x-show="show"
@@ -174,7 +179,7 @@
                                         >{{ __('Сообщение отправлено.') }}</p>
                                     @endif
                                 </div>
-                            </div>
+                            </form>
                             @endforeach
                     </div>
                 </div>
@@ -194,7 +199,8 @@
                     <div class="mt-6 space-y-6">
                             @foreach ($city_students as $student)
                             
-                            <div>
+                            <form action="{{route('notification.user')}}" method="post">
+                                @csrf
                                 <x-input-label>@if ($student->is_confirmed)
                                     +
                                 @else
@@ -212,10 +218,13 @@
                                 @else
                                     -
                                 @endif</x-input-label>
+
+                                <input type="text" class="hidden" name="user_id" value="{{$student->id}}">
+
                                 <div class="flex items-center gap-4">
                                     <x-primary-button>{{ __('Оповестить') }}</x-primary-button>
                         
-                                    @if (session('status') === 'summary-updated')
+                                    @if (session('status') === 'notification_sent')
                                         <p
                                             x-data="{ show: true }"
                                             x-show="show"
@@ -225,7 +234,7 @@
                                         >{{ __('Сообщение отправлено.') }}</p>
                                     @endif
                                 </div>
-                            </div>
+                            </form>
                             @endforeach
                     </div>
                 </div>

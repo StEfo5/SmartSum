@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::controller(NotificationController::class)->group(function () {
             Route::post('/notificate_summary', 'summary')->name('notificate.summary');
+            Route::post('/notification_user', 'user')->name('notification.user');
         });
     });
 });

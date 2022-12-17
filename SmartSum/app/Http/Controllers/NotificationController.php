@@ -25,4 +25,18 @@ class NotificationController extends Controller
         }
         return redirect()->back()->with('status', 'notification_sent');
     }
+
+    public function user(Request $request){
+        $telegram_id = DB::table('users')
+            ->where([
+                ['id', $request->user_id],
+            ])->value('telegram_id');
+        $api_token = '5971157491:AAGR5y1mPCmxxKyv-QRET4ZdIRLarar0Ud8';
+        $data = [
+            'chat_id' => $telegram_id,
+            'text' => 'Подтвердите питание',
+        ];
+        $response = file_get_contents("https://api.telegram.org/bot$api_token/sendMessage?" . http_build_query($data));    
+        return redirect()->back()->with('status', 'notification_sent');
+    }
 }
