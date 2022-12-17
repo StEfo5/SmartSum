@@ -99,6 +99,6 @@ class SummariesController extends Controller
                 ['date', $request->date],
                 ['class_id', Auth::user()->class_id],
             ])->update(['is_confirmed' => true]);
-        return Redirect::route('summaries.show')->with('status', 'summery_updated');
+        return redirect()->back()->with('status', 'summery_updated');
     }
 }

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'telegram_id',
         'type',
+        'role',
         'class_id',
     ];
 

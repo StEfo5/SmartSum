@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MenusController;
 use App\Http\Controllers\SummariesController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 
 
 /*
@@ -20,7 +20,7 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
 Route::get('/dashboard', function () {
@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
         Route::controller(SummariesController::class)->group(function () {
             Route::get('/{date}', 'show')->name('summaries.show');
             Route::post('/confirm', 'confirm')->name('summary.confirm');
+        });
+        Route::controller(NotificationController::class)->group(function () {
+            Route::post('/notificate_summary', 'summary')->name('notificate.summary');
         });
     });
 });

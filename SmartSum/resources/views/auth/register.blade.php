@@ -25,7 +25,7 @@
 
             <!-- Telegram ID -->
             <div class="mt-4">
-                <x-input-label for="telegram_id" :value="__('Telegram ID (получите от бота @getmyid_bot)')" />
+                <p class="block font-medium text-sm text-gray-700">Telegram ID (получите от бота <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="https://t.me/getmyid_bot">@getmyid_bot</a> и обязательно подключитесь к нашему боту <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="https://t.me/SmartSumBot">@SmartSumBot</a>, чтобы получть уведомления)</p>
                 <x-text-input id="telegram_id" class="block mt-1 w-full" type="text" name="telegram_id" :value="old('telegram_id')" required />
                 <x-input-error :messages="$errors->get('telegram_id')" class="mt-2" />
             </div>

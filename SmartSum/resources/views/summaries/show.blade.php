@@ -33,7 +33,8 @@
                             </p>
                         </header>
 
-                        <div class="mt-6 space-y-6">
+                        <form method="post" action="{{route('notificate.summary')}}" class="mt-6 space-y-6">
+                            @csrf
                             <div>
                                 <p class="text-sm text-gray-600">
                                     Интернат: {{$summary->dormitory}}
@@ -54,12 +55,29 @@
                                     Второе: {{$summary->second_course}}
                                 </p>
                             </div>
-                            
-                        </div>
+
+                            @if (!$summary->is_confirmed)
+                            <input type="text" class="hidden" name="class_id" value="{{$summary->class_id}}">
+
+                            <div class="flex items-center gap-4">
+                                <x-primary-button>{{ __('Оповестить') }}</x-primary-button>
+                    
+                                @if (session('status') === 'notification_sent')
+                                    <p
+                                        x-data="{ show: true }"
+                                        x-show="show"
+                                        x-transition
+                                        x-init="setTimeout(() => show = false, 2000)"
+                                        class="text-sm text-gray-600"
+                                    >{{ __('Сообщение отправлено.') }}</p>
+                                @endif
+                            </div>
+                            @endif
+                        </form>
                     </div>
                 </div>
             @endforeach
-            @else
+            @elseif(!empty($class_summary))
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <header>
